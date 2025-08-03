@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members - Accord Church</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/members.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="../index.html">
+                    <i class="fas fa-church"></i>
+                    <span>Accord Church</span>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="members.html" class="active"><i class="fas fa-users"></i> Members</a></li>
+                <li><a href="events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
+                <li><a href="donations.html"><i class="fas fa-hand-holding-usd"></i> Donations</a></li>
+                <li><a href="ministries.html"><i class="fas fa-hands-helping"></i> Ministries</a></li>
+                <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+            <div class="nav-user">
+                <span>Admin User</span>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="members-page">
+        <!-- Header Section -->
+        <header class="page-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1><i class="fas fa-users"></i> Member Management</h1>
+                    <p>Manage church members, families, and contact information</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="addMemberBtn">
+                        <i class="fas fa-user-plus"></i> Add Member
+                    </button>
+                    <button class="btn btn-secondary" id="importMembersBtn">
+                        <i class="fas fa-upload"></i> Import
+                    </button>
+                    <button class="btn btn-secondary" id="exportMembersBtn">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Statistics Cards -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalMembersCount">0</h3>
+                        <p>Total Members</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon active">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="activeMembersCount">0</h3>
+                        <p>Active Members</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon new">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="newMembersCount">0</h3>
+                        <p>New This Month</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon families">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="familiesCount">0</h3>
+                        <p>Families</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters and Search -->
+        <section class="filters-section">
+            <div class="filters-container">
+                <div class="search-group">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="memberSearch" placeholder="Search members by name, email, or phone...">
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <select id="statusFilter" class="filter-select">
+                        <option value="all">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="visitor">Visitor</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <select id="ageGroupFilter" class="filter-select">
+                        <option value="all">All Ages</option>
+                        <option value="children">Children (0-12)</option>
+                        <option value="youth">Youth (13-17)</option>
+                        <option value="young-adult">Young Adult (18-30)</option>
+                        <option value="adult">Adult (31-64)</option>
+                        <option value="senior">Senior (65+)</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <select id="ministryFilter" class="filter-select">
+                        <option value="all">All Ministries</option>
+                        <option value="worship">Worship Team</option>
+                        <option value="youth">Youth Ministry</option>
+                        <option value="children">Children's Ministry</option>
+                        <option value="outreach">Outreach</option>
+                        <option value="administration">Administration</option>
+                    </select>
+                </div>
+                
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="grid">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fas fa-list"></i>
+                    </button>
+                    <button class="view-btn" data-view="table">
+                        <i class="fas fa-table"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Members Display -->
+        <section class="members-section">
+            <!-- Grid View -->
+            <div class="members-grid" id="membersGrid">
+                <!-- Member cards will be populated here -->
+            </div>
+            
+            <!-- List View -->
+            <div class="members-list" id="membersList" style="display: none;">
+                <!-- Member list items will be populated here -->
+            </div>
+            
+            <!-- Table View -->
+            <div class="members-table-container" id="membersTable" style="display: none;">
+                <table class="members-table">
+                    <thead>
+                        <tr>
+                            <th>Photo</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Status</th>
+                            <th>Join Date</th>
+                            <th>Ministry</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="membersTableBody">
+                        <!-- Table rows will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Pagination -->
+        <section class="pagination-section">
+            <div class="pagination-info">
+                <span id="paginationInfo">Showing 1-20 of 0 members</span>
+            </div>
+            <div class="pagination-controls">
+                <button class="btn btn-sm" id="prevPage" disabled>
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <div class="page-numbers" id="pageNumbers">
+                    <!-- Page numbers will be populated here -->
+                </div>
+                <button class="btn btn-sm" id="nextPage">
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Member Profile Modal -->
+    <div class="modal-overlay" id="memberModal">
+        <div class="modal large">
+            <div class="modal-header">
+                <h3 id="memberModalTitle">Member Profile</h3>
+                <button class="modal-close" id="closeMemberModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="memberModalBody">
+                <!-- Member profile content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Member Modal -->
+    <div class="modal-overlay" id="memberFormModal">
+        <div class="modal large">
+            <div class="modal-header">
+                <h3 id="memberFormTitle">Add New Member</h3>
+                <button class="modal-close" id="closeMemberFormModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="memberForm" class="member-form">
+                    <!-- Personal Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-user"></i> Personal Information</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Profile Photo</label>
+                                <div class="photo-upload">
+                                    <div class="photo-preview" id="photoPreview">
+                                        <i class="fas fa-user-circle"></i>
+                                    </div>
+                                    <input type="file" id="memberPhoto" accept="image/*" style="display: none;">
+                                    <button type="button" class="btn btn-sm btn-secondary" onclick="document.getElementById('memberPhoto').click()">
+                                        <i class="fas fa-camera"></i> Upload Photo
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Title</label>
+                                <select class="form-control" id="memberTitle">
+                                    <option value="">Select Title</option>
+                                    <option value="Mr.">Mr.</option>
+                                    <option value="Mrs.">Mrs.</option>
+                                    <option value="Ms.">Ms.</option>
+                                    <option value="Dr.">Dr.</option>
+                                    <option value="Rev.">Rev.</option>
+                                    <option value="Pastor">Pastor</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">First Name *</label>
+                                <input type="text" class="form-control" id="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Middle Name</label>
+                                <input type="text" class="form-control" id="middleName">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Last Name *</label>
+                                <input type="text" class="form-control" id="lastName" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Suffix</label>
+                                <select class="form-control" id="memberSuffix">
+                                    <option value="">Select Suffix</option>
+                                    <option value="Jr.">Jr.</option>
+                                    <option value="Sr.">Sr.</option>
+                                    <option value="II">II</option>
+                                    <option value="III">III</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Birth Date</label>
+                                <input type="date" class="form-control" id="birthDate">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Gender</label>
+                                <select class="form-control" id="gender">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Marital Status</label>
+                                <select class="form-control" id="maritalStatus">
+                                    <option value="">Select Status</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Divorced">Divorced</option>
+                                    <option value="Widowed">Widowed</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Anniversary Date</label>
+                                <input type="date" class="form-control" id="anniversaryDate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-address-book"></i> Contact Information</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Email *</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone *</label>
+                                <input type="tel" class="form-control" id="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Mobile Phone</label>
+                                <input type="tel" class="form-control" id="mobilePhone">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Work Phone</label>
+                                <input type="tel" class="form-control" id="workPhone">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" placeholder="Street Address">
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">City</label>
+                                <input type="text" class="form-control" id="city">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">State</label>
+                                <input type="text" class="form-control" id="state">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">ZIP Code</label>
+                                <input type="text" class="form-control" id="zipCode">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Country</label>
+                                <input type="text" class="form-control" id="country" value="United States">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Church Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-church"></i> Church Information</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Membership Status *</label>
+                                <select class="form-control" id="membershipStatus" required>
+                                    <option value="">Select Status</option>
+                                    <option value="Active">Active Member</option>
+                                    <option value="Inactive">Inactive Member</option>
+                                    <option value="Visitor">Visitor</option>
+                                    <option value="Prospect">Prospect</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Date Joined</label>
+                                <input type="date" class="form-control" id="dateJoined">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Baptism Date</label>
+                                <input type="date" class="form-control" id="baptismDate">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Confirmation Date</label>
+                                <input type="date" class="form-control" id="confirmationDate">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Ministry Involvement</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="ministries" value="worship"> Worship Team
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="ministries" value="youth"> Youth Ministry
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="ministries" value="children"> Children's Ministry
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="ministries" value="outreach"> Outreach
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="ministries" value="administration"> Administration
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="ministries" value="hospitality"> Hospitality
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Skills & Talents</label>
+                            <textarea class="form-control" id="skillsTalents" rows="3" placeholder="List member's skills, talents, and areas of expertise..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Family Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-users"></i> Family Information</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Family Name</label>
+                                <input type="text" class="form-control" id="familyName" placeholder="e.g., The Smith Family">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Relationship Status</label>
+                                <select class="form-control" id="relationshipStatus">
+                                    <option value="">Select Status</option>
+                                    <option value="Head of Household">Head of Household</option>
+                                    <option value="Spouse">Spouse</option>
+                                    <option value="Child">Child</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Emergency Contact</label>
+                            <input type="text" class="form-control" id="emergencyContact" placeholder="Name - Phone Number">
+                        </div>
+                    </div>
+
+                    <!-- Additional Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-info-circle"></i> Additional Information</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Occupation</label>
+                                <input type="text" class="form-control" id="occupation">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Employer</label>
+                                <input type="text" class="form-control" id="employer">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Special Needs / Medical Information</label>
+                            <textarea class="form-control" id="specialNeeds" rows="2" placeholder="Any special needs, allergies, or medical information..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Notes</label>
+                            <textarea class="form-control" id="memberNotes" rows="3" placeholder="Additional notes about this member..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Member
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="cancelMemberForm">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/members-enhanced.js"></script>
+</body>
+</html>

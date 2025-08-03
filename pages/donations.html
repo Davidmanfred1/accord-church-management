@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donations - Accord Church</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/donations.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="../index.html">
+                    <i class="fas fa-church"></i>
+                    <span>Accord Church</span>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="members.html"><i class="fas fa-users"></i> Members</a></li>
+                <li><a href="events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
+                <li><a href="donations.html" class="active"><i class="fas fa-hand-holding-usd"></i> Donations</a></li>
+                <li><a href="ministries.html"><i class="fas fa-hands-helping"></i> Ministries</a></li>
+                <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+            <div class="nav-user">
+                <span>Admin User</span>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="donations-page">
+        <!-- Header Section -->
+        <header class="page-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1><i class="fas fa-hand-holding-usd"></i> Donation Management</h1>
+                    <p>Track and manage church donations and financial contributions</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="addDonationBtn">
+                        <i class="fas fa-plus"></i> Record Donation
+                    </button>
+                    <button class="btn btn-secondary" id="pledgeTrackingBtn">
+                        <i class="fas fa-handshake"></i> Pledges
+                    </button>
+                    <button class="btn btn-secondary" id="recurringDonationsBtn">
+                        <i class="fas fa-sync-alt"></i> Recurring
+                    </button>
+                    <button class="btn btn-info" id="generateReportBtn">
+                        <i class="fas fa-chart-bar"></i> Reports
+                    </button>
+                    <button class="btn btn-secondary" id="exportDonationsBtn">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Financial Overview Cards -->
+        <section class="financial-overview">
+            <div class="overview-grid">
+                <div class="overview-card total">
+                    <div class="card-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="totalDonationsAmount">$0</h3>
+                        <p>Total Donations</p>
+                        <span class="period">All Time</span>
+                    </div>
+                    <div class="card-trend">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+12.5%</span>
+                    </div>
+                </div>
+                
+                <div class="overview-card monthly">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-month"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="monthlyDonationsAmount">$0</h3>
+                        <p>This Month</p>
+                        <span class="period">January 2024</span>
+                    </div>
+                    <div class="card-trend">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+8.3%</span>
+                    </div>
+                </div>
+                
+                <div class="overview-card average">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="averageDonation">$0</h3>
+                        <p>Average Donation</p>
+                        <span class="period">Per Transaction</span>
+                    </div>
+                    <div class="card-trend">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+5.2%</span>
+                    </div>
+                </div>
+                
+                <div class="overview-card donors">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="uniqueDonors">0</h3>
+                        <p>Active Donors</p>
+                        <span class="period">This Year</span>
+                    </div>
+                    <div class="card-trend">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+15.7%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Stats and Goals -->
+        <section class="goals-section">
+            <div class="goals-grid">
+                <div class="goal-card">
+                    <h4><i class="fas fa-target"></i> Monthly Goal</h4>
+                    <div class="goal-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="monthlyGoalProgress" style="width: 75%"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span id="monthlyGoalCurrent">$7,500</span> / <span id="monthlyGoalTarget">$10,000</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="goal-card">
+                    <h4><i class="fas fa-calendar-year"></i> Annual Goal</h4>
+                    <div class="goal-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="annualGoalProgress" style="width: 45%"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span id="annualGoalCurrent">$54,000</span> / <span id="annualGoalTarget">$120,000</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="goal-card">
+                    <h4><i class="fas fa-hammer"></i> Building Fund</h4>
+                    <div class="goal-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="buildingFundProgress" style="width: 30%"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span id="buildingFundCurrent">$15,000</span> / <span id="buildingFundTarget">$50,000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters and Controls -->
+        <section class="controls-section">
+            <div class="controls-container">
+                <div class="search-group">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="donationSearch" placeholder="Search by donor name, amount, or notes...">
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <select id="typeFilter" class="filter-select">
+                        <option value="all">All Types</option>
+                        <option value="tithe">Tithe</option>
+                        <option value="offering">Offering</option>
+                        <option value="special">Special</option>
+                        <option value="building">Building Fund</option>
+                        <option value="mission">Mission</option>
+                        <option value="pledge">Pledge</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <select id="methodFilter" class="filter-select">
+                        <option value="all">All Methods</option>
+                        <option value="cash">Cash</option>
+                        <option value="check">Check</option>
+                        <option value="credit-card">Credit Card</option>
+                        <option value="bank-transfer">Bank Transfer</option>
+                        <option value="online">Online</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <select id="dateRangeFilter" class="filter-select">
+                        <option value="all">All Time</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="quarter">This Quarter</option>
+                        <option value="year">This Year</option>
+                        <option value="custom">Custom Range</option>
+                    </select>
+                </div>
+                
+                <div class="date-range-inputs" id="customDateRange" style="display: none;">
+                    <input type="date" id="startDate" class="form-control">
+                    <span>to</span>
+                    <input type="date" id="endDate" class="form-control">
+                </div>
+                
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="list">
+                        <i class="fas fa-list"></i> List
+                    </button>
+                    <button class="view-btn" data-view="chart">
+                        <i class="fas fa-chart-bar"></i> Chart
+                    </button>
+                    <button class="view-btn" data-view="summary">
+                        <i class="fas fa-table"></i> Summary
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Donations Display -->
+        <section class="donations-section">
+            <!-- List View -->
+            <div class="donations-list" id="donationsList">
+                <!-- Donation items will be populated here -->
+            </div>
+            
+            <!-- Chart View -->
+            <div class="donations-chart" id="donationsChart" style="display: none;">
+                <div class="chart-container">
+                    <canvas id="donationsChartCanvas"></canvas>
+                </div>
+                <div class="chart-controls">
+                    <button class="btn btn-sm btn-secondary" data-chart="monthly">Monthly</button>
+                    <button class="btn btn-sm btn-secondary" data-chart="category">By Category</button>
+                    <button class="btn btn-sm btn-secondary" data-chart="donors">Top Donors</button>
+                </div>
+            </div>
+            
+            <!-- Summary View -->
+            <div class="donations-summary" id="donationsSummary" style="display: none;">
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <h4>By Category</h4>
+                        <div class="summary-list" id="categorySummary">
+                            <!-- Category breakdown will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <h4>By Method</h4>
+                        <div class="summary-list" id="methodSummary">
+                            <!-- Method breakdown will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <h4>Top Donors</h4>
+                        <div class="summary-list" id="topDonorsSummary">
+                            <!-- Top donors will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <h4>Recent Activity</h4>
+                        <div class="summary-list" id="recentActivitySummary">
+                            <!-- Recent activity will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="quick-actions-section">
+            <div class="quick-actions-card">
+                <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                <div class="quick-actions-grid">
+                    <button class="quick-action-btn" onclick="donationsManager.recordTithe()">
+                        <i class="fas fa-percentage"></i>
+                        <span>Record Tithe</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="donationsManager.recordOffering()">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <span>Record Offering</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="donationsManager.showPledgeModal()">
+                        <i class="fas fa-handshake"></i>
+                        <span>New Pledge</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="donationsManager.setupRecurring()">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Recurring Gift</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="donationsManager.generateTaxReport()">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <span>Tax Report</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="donationsManager.sendThankYou()">
+                        <i class="fas fa-envelope-open-text"></i>
+                        <span>Thank You Notes</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Donation Details Modal -->
+    <div class="modal-overlay" id="donationModal">
+        <div class="modal large">
+            <div class="modal-header">
+                <h3 id="donationModalTitle">Donation Details</h3>
+                <button class="modal-close" id="closeDonationModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="donationModalBody">
+                <!-- Donation details content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Donation Modal -->
+    <div class="modal-overlay" id="donationFormModal">
+        <div class="modal large">
+            <div class="modal-header">
+                <h3 id="donationFormTitle">Record New Donation</h3>
+                <button class="modal-close" id="closeDonationFormModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="donationForm" class="donation-form">
+                    <!-- Donor Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-user"></i> Donor Information</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Donor *</label>
+                                <select class="form-control" id="donorSelect" required>
+                                    <option value="">Select a donor</option>
+                                    <!-- Will be populated with members -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Anonymous Donation</label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="anonymousDonation">
+                                    Keep donor anonymous
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" id="guestDonorSection" style="display: none;">
+                            <label class="form-label">Guest Donor Information</label>
+                            <div class="form-grid">
+                                <input type="text" class="form-control" id="guestDonorName" placeholder="Full Name">
+                                <input type="email" class="form-control" id="guestDonorEmail" placeholder="Email Address">
+                                <input type="tel" class="form-control" id="guestDonorPhone" placeholder="Phone Number">
+                                <input type="text" class="form-control" id="guestDonorAddress" placeholder="Address">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Donation Details -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-dollar-sign"></i> Donation Details</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Amount *</label>
+                                <div class="amount-input">
+                                    <span class="currency-symbol">$</span>
+                                    <input type="number" class="form-control" id="donationAmount" 
+                                           step="0.01" min="0" required placeholder="0.00">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Date *</label>
+                                <input type="date" class="form-control" id="donationDate" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Donation Type *</label>
+                                <select class="form-control" id="donationType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="tithe">Tithe</option>
+                                    <option value="offering">Offering</option>
+                                    <option value="special">Special Offering</option>
+                                    <option value="building">Building Fund</option>
+                                    <option value="mission">Mission</option>
+                                    <option value="pledge">Pledge Payment</option>
+                                    <option value="memorial">Memorial Gift</option>
+                                    <option value="thanksgiving">Thanksgiving Offering</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Payment Method *</label>
+                                <select class="form-control" id="paymentMethod" required>
+                                    <option value="">Select Method</option>
+                                    <option value="cash">Cash</option>
+                                    <option value="check">Check</option>
+                                    <option value="credit-card">Credit Card</option>
+                                    <option value="debit-card">Debit Card</option>
+                                    <option value="bank-transfer">Bank Transfer</option>
+                                    <option value="online">Online Payment</option>
+                                    <option value="mobile-app">Mobile App</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-details" id="paymentDetails">
+                            <!-- Payment-specific fields will be shown here -->
+                        </div>
+                    </div>
+
+                    <!-- Additional Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-info-circle"></i> Additional Information</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Fund/Campaign</label>
+                                <select class="form-control" id="donationFund">
+                                    <option value="">General Fund</option>
+                                    <option value="building-fund">Building Fund</option>
+                                    <option value="mission-fund">Mission Fund</option>
+                                    <option value="youth-ministry">Youth Ministry</option>
+                                    <option value="children-ministry">Children's Ministry</option>
+                                    <option value="music-ministry">Music Ministry</option>
+                                    <option value="outreach">Community Outreach</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Tax Deductible</label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="taxDeductible" checked>
+                                    This donation is tax deductible
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Purpose/Designation</label>
+                            <input type="text" class="form-control" id="donationPurpose" 
+                                   placeholder="Specific purpose or designation for this donation">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Notes</label>
+                            <textarea class="form-control" id="donationNotes" rows="3" 
+                                      placeholder="Additional notes about this donation..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="sendReceipt">
+                                Send donation receipt to donor
+                            </label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="recurringDonation">
+                                Set up as recurring donation
+                            </label>
+                        </div>
+                        
+                        <div class="recurring-options" id="recurringOptions" style="display: none;">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Frequency</label>
+                                    <select class="form-control" id="recurringFrequency">
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                        <option value="quarterly">Quarterly</option>
+                                        <option value="annually">Annually</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">End Date</label>
+                                    <input type="date" class="form-control" id="recurringEndDate">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Record Donation
+                        </button>
+                        <button type="button" class="btn btn-success" id="saveAndReceiptBtn">
+                            <i class="fas fa-receipt"></i> Save & Print Receipt
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="cancelDonationForm">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pledge Management Modal -->
+    <div class="modal-overlay" id="pledgeModal">
+        <div class="modal large">
+            <div class="modal-header">
+                <h3 id="pledgeModalTitle">Pledge Management</h3>
+                <button class="modal-close" id="closePledgeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="pledgeModalBody">
+                <!-- Pledge content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Reports Modal -->
+    <div class="modal-overlay" id="reportsModal">
+        <div class="modal extra-large">
+            <div class="modal-header">
+                <h3 id="reportsModalTitle">Financial Reports</h3>
+                <button class="modal-close" id="closeReportsModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="reportsModalBody">
+                <!-- Reports content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/donations-enhanced.js"></script>
+</body>
+</html>

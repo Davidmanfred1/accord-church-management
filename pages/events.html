@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Accord Church</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/events.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="../index.html">
+                    <i class="fas fa-church"></i>
+                    <span>Accord Church</span>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="members.html"><i class="fas fa-users"></i> Members</a></li>
+                <li><a href="events.html" class="active"><i class="fas fa-calendar-alt"></i> Events</a></li>
+                <li><a href="donations.html"><i class="fas fa-hand-holding-usd"></i> Donations</a></li>
+                <li><a href="ministries.html"><i class="fas fa-hands-helping"></i> Ministries</a></li>
+                <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+            <div class="nav-user">
+                <span>Admin User</span>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="events-page">
+        <!-- Header Section -->
+        <header class="page-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1><i class="fas fa-calendar-alt"></i> Event Management</h1>
+                    <p>Plan, organize, and manage church events and activities</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="addEventBtn">
+                        <i class="fas fa-calendar-plus"></i> Add Event
+                    </button>
+                    <button class="btn btn-secondary" id="eventTemplatesBtn">
+                        <i class="fas fa-copy"></i> Templates
+                    </button>
+                    <button class="btn btn-secondary" id="exportEventsBtn">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Statistics Cards -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalEventsCount">0</h3>
+                        <p>Total Events</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon upcoming">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="upcomingEventsCount">0</h3>
+                        <p>Upcoming Events</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon monthly">
+                        <i class="fas fa-calendar-month"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="monthlyEventsCount">0</h3>
+                        <p>This Month</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon attendance">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="averageAttendanceCount">0</h3>
+                        <p>Avg. Attendance</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters and Controls -->
+        <section class="controls-section">
+            <div class="controls-container">
+                <div class="search-group">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="eventSearch" placeholder="Search events by title, location, or description...">
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <select id="typeFilter" class="filter-select">
+                        <option value="all">All Types</option>
+                        <option value="service">Service</option>
+                        <option value="study">Bible Study</option>
+                        <option value="meeting">Meeting</option>
+                        <option value="social">Social</option>
+                        <option value="outreach">Outreach</option>
+                        <option value="youth">Youth</option>
+                        <option value="children">Children</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <select id="statusFilter" class="filter-select">
+                        <option value="all">All Status</option>
+                        <option value="upcoming">Upcoming</option>
+                        <option value="past">Past</option>
+                        <option value="today">Today</option>
+                        <option value="this-week">This Week</option>
+                        <option value="this-month">This Month</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <select id="locationFilter" class="filter-select">
+                        <option value="all">All Locations</option>
+                        <option value="main-sanctuary">Main Sanctuary</option>
+                        <option value="fellowship-hall">Fellowship Hall</option>
+                        <option value="youth-room">Youth Room</option>
+                        <option value="conference-room">Conference Room</option>
+                        <option value="off-site">Off-site</option>
+                    </select>
+                </div>
+                
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="calendar">
+                        <i class="fas fa-calendar"></i> Calendar
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fas fa-list"></i> List
+                    </button>
+                    <button class="view-btn" data-view="grid">
+                        <i class="fas fa-th"></i> Grid
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Display -->
+        <section class="events-section">
+            <!-- Calendar View -->
+            <div class="events-calendar-container" id="eventsCalendar">
+                <div class="calendar-header">
+                    <button class="calendar-nav" id="prevMonth">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2 id="currentMonth">January 2024</h2>
+                    <button class="calendar-nav" id="nextMonth">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Calendar will be populated here -->
+                </div>
+            </div>
+            
+            <!-- List View -->
+            <div class="events-list" id="eventsList" style="display: none;">
+                <!-- Event list items will be populated here -->
+            </div>
+            
+            <!-- Grid View -->
+            <div class="events-grid" id="eventsGrid" style="display: none;">
+                <!-- Event cards will be populated here -->
+            </div>
+        </section>
+
+        <!-- Quick Event Creation -->
+        <section class="quick-create-section">
+            <div class="quick-create-card">
+                <h3><i class="fas fa-bolt"></i> Quick Create</h3>
+                <div class="quick-create-buttons">
+                    <button class="quick-btn" data-template="sunday-service">
+                        <i class="fas fa-church"></i>
+                        <span>Sunday Service</span>
+                    </button>
+                    <button class="quick-btn" data-template="bible-study">
+                        <i class="fas fa-book"></i>
+                        <span>Bible Study</span>
+                    </button>
+                    <button class="quick-btn" data-template="youth-meeting">
+                        <i class="fas fa-users"></i>
+                        <span>Youth Meeting</span>
+                    </button>
+                    <button class="quick-btn" data-template="board-meeting">
+                        <i class="fas fa-handshake"></i>
+                        <span>Board Meeting</span>
+                    </button>
+                    <button class="quick-btn" data-template="outreach">
+                        <i class="fas fa-hands-helping"></i>
+                        <span>Outreach</span>
+                    </button>
+                    <button class="quick-btn" data-template="special-event">
+                        <i class="fas fa-star"></i>
+                        <span>Special Event</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Event Details Modal -->
+    <div class="modal-overlay" id="eventModal">
+        <div class="modal large">
+            <div class="modal-header">
+                <h3 id="eventModalTitle">Event Details</h3>
+                <button class="modal-close" id="closeEventModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="eventModalBody">
+                <!-- Event details content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Event Modal -->
+    <div class="modal-overlay" id="eventFormModal">
+        <div class="modal large">
+            <div class="modal-header">
+                <h3 id="eventFormTitle">Add New Event</h3>
+                <button class="modal-close" id="closeEventFormModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="eventForm" class="event-form">
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-info-circle"></i> Basic Information</h4>
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label class="form-label">Event Title *</label>
+                                <input type="text" class="form-control" id="eventTitle" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" id="eventDescription" rows="3" placeholder="Describe the event..."></textarea>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Event Type *</label>
+                                <select class="form-control" id="eventType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="service">Service</option>
+                                    <option value="study">Bible Study</option>
+                                    <option value="meeting">Meeting</option>
+                                    <option value="social">Social</option>
+                                    <option value="outreach">Outreach</option>
+                                    <option value="youth">Youth</option>
+                                    <option value="children">Children</option>
+                                    <option value="special">Special Event</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Category</label>
+                                <select class="form-control" id="eventCategory">
+                                    <option value="">Select Category</option>
+                                    <option value="worship">Worship</option>
+                                    <option value="education">Education</option>
+                                    <option value="fellowship">Fellowship</option>
+                                    <option value="ministry">Ministry</option>
+                                    <option value="administration">Administration</option>
+                                    <option value="community">Community</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Date and Time -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-clock"></i> Date and Time</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Start Date *</label>
+                                <input type="date" class="form-control" id="startDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Start Time *</label>
+                                <input type="time" class="form-control" id="startTime" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">End Date</label>
+                                <input type="date" class="form-control" id="endDate">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">End Time</label>
+                                <input type="time" class="form-control" id="endTime">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="allDayEvent">
+                                All Day Event
+                            </label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="recurringEvent">
+                                Recurring Event
+                            </label>
+                        </div>
+                        
+                        <div class="recurring-options" id="recurringOptions" style="display: none;">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Repeat</label>
+                                    <select class="form-control" id="repeatFrequency">
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                        <option value="yearly">Yearly</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Repeat Until</label>
+                                    <input type="date" class="form-control" id="repeatUntil">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-map-marker-alt"></i> Location</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Venue *</label>
+                                <select class="form-control" id="eventVenue" required>
+                                    <option value="">Select Venue</option>
+                                    <option value="main-sanctuary">Main Sanctuary</option>
+                                    <option value="fellowship-hall">Fellowship Hall</option>
+                                    <option value="youth-room">Youth Room</option>
+                                    <option value="conference-room">Conference Room</option>
+                                    <option value="children-room">Children's Room</option>
+                                    <option value="off-site">Off-site Location</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Room/Area</label>
+                                <input type="text" class="form-control" id="eventRoom" placeholder="Specific room or area">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" id="offSiteLocation" style="display: none;">
+                            <label class="form-label">Off-site Address</label>
+                            <textarea class="form-control" id="offSiteAddress" rows="2" placeholder="Enter full address for off-site events..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Capacity and Registration -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-users"></i> Capacity and Registration</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Maximum Capacity</label>
+                                <input type="number" class="form-control" id="maxCapacity" min="1" placeholder="Leave blank for unlimited">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Registration Required</label>
+                                <select class="form-control" id="registrationRequired">
+                                    <option value="no">No Registration</option>
+                                    <option value="optional">Optional Registration</option>
+                                    <option value="required">Required Registration</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="registration-options" id="registrationOptions" style="display: none;">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Registration Deadline</label>
+                                    <input type="date" class="form-control" id="registrationDeadline">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Registration Fee</label>
+                                    <input type="number" class="form-control" id="registrationFee" min="0" step="0.01" placeholder="0.00">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Organizers and Contacts -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-user-tie"></i> Organizers and Contacts</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Primary Organizer</label>
+                                <select class="form-control" id="primaryOrganizer">
+                                    <option value="">Select Organizer</option>
+                                    <!-- Will be populated with members -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Contact Phone</label>
+                                <input type="tel" class="form-control" id="contactPhone">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Additional Organizers</label>
+                            <div class="organizers-list" id="organizersList">
+                                <!-- Additional organizers will be added here -->
+                            </div>
+                            <button type="button" class="btn btn-sm btn-secondary" id="addOrganizerBtn">
+                                <i class="fas fa-plus"></i> Add Organizer
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Resources and Requirements -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-tools"></i> Resources and Requirements</h4>
+                        <div class="form-group">
+                            <label class="form-label">Equipment Needed</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="equipment" value="sound-system"> Sound System
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="equipment" value="projector"> Projector
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="equipment" value="microphones"> Microphones
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="equipment" value="chairs"> Extra Chairs
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="equipment" value="tables"> Tables
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="equipment" value="decorations"> Decorations
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Special Requirements</label>
+                            <textarea class="form-control" id="specialRequirements" rows="3" placeholder="Any special setup, catering, or other requirements..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Budget</label>
+                            <input type="number" class="form-control" id="eventBudget" min="0" step="0.01" placeholder="0.00">
+                        </div>
+                    </div>
+
+                    <!-- Additional Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-sticky-note"></i> Additional Information</h4>
+                        <div class="form-group">
+                            <label class="form-label">Target Audience</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="audience" value="all-ages"> All Ages
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="audience" value="adults"> Adults
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="audience" value="youth"> Youth
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="audience" value="children"> Children
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="audience" value="families"> Families
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="audience" value="seniors"> Seniors
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Event Notes</label>
+                            <textarea class="form-control" id="eventNotes" rows="3" placeholder="Additional notes, instructions, or reminders..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="publicEvent">
+                                Public Event (visible to visitors)
+                            </label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="childcareProvided">
+                                Childcare Provided
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Event
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="saveAsDraftBtn">
+                            <i class="fas fa-file-alt"></i> Save as Draft
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="cancelEventForm">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Templates Modal -->
+    <div class="modal-overlay" id="templatesModal">
+        <div class="modal medium">
+            <div class="modal-header">
+                <h3>Event Templates</h3>
+                <button class="modal-close" id="closeTemplatesModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="templates-grid" id="templatesGrid">
+                    <!-- Templates will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attendance Modal -->
+    <div class="modal-overlay" id="attendanceModal">
+        <div class="modal large">
+            <div class="modal-header">
+                <h3 id="attendanceModalTitle">Event Attendance</h3>
+                <button class="modal-close" id="closeAttendanceModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="attendanceModalBody">
+                <!-- Attendance content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/events-enhanced.js"></script>
+</body>
+</html>

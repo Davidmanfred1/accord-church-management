@@ -1,0 +1,67 @@
+🚀 QUICK GUIDE: Push Accord Church Management System to GitHub
+================================================================
+
+STEP 1: Navigate to Your Project Directory
+------------------------------------------
+1. Open Command Prompt or PowerShell
+2. Navigate to the folder containing your project files (where index.html is located)
+   Example: cd "C:\Users\david\Desktop\accord-church-management"
+
+STEP 2: Run the Setup Script
+----------------------------
+Choose ONE of these options:
+
+OPTION A - Command Prompt:
+   setup-git.bat
+
+OPTION B - PowerShell:
+   .\setup-git.ps1
+
+OPTION C - Manual Commands:
+   git init
+   git add .
+   git commit -m "Initial commit: Complete Accord Church Management System"
+   git remote add origin https://github.com/Davidmanfred1/accord-church-management.git
+   git branch -M main
+   git push -u origin main
+
+STEP 3: Verify Success
+----------------------
+1. Go to https://github.com/Davidmanfred1/accord-church-management
+2. Check that all your files are uploaded
+3. Your system is now backed up and version controlled!
+
+TROUBLESHOOTING
+===============
+
+Problem: "git is not recognized"
+Solution: Install Git from https://git-scm.com/downloads
+
+Problem: "Permission denied"
+Solution: Make sure you're logged into GitHub and have access to the repository
+
+Problem: "Repository not found"
+Solution: Verify the repository URL is correct
+
+HOSTING YOUR WEBSITE (Optional)
+===============================
+
+To make your website live on the internet:
+
+1. Go to your GitHub repository
+2. Click "Settings" tab
+3. Scroll to "Pages" section
+4. Select "Deploy from a branch"
+5. Choose "main" branch
+6. Click "Save"
+
+Your website will be live at:
+https://davidmanfred1.github.io/accord-church-management/
+
+NEED HELP?
+==========
+- Check DEPLOYMENT.md for detailed instructions
+- Create an issue on GitHub if you encounter problems
+- Make sure Git is installed and configured properly
+
+🎉 That's it! Your Accord Church Management System is now on GitHub!

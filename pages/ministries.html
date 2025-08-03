@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministries - Accord Church</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/ministries.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="../index.html">
+                    <i class="fas fa-church"></i>
+                    <span>Accord Church</span>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="members.html"><i class="fas fa-users"></i> Members</a></li>
+                <li><a href="events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
+                <li><a href="donations.html"><i class="fas fa-hand-holding-usd"></i> Donations</a></li>
+                <li><a href="ministries.html" class="active"><i class="fas fa-hands-helping"></i> Ministries</a></li>
+                <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+            <div class="nav-user">
+                <span>Admin User</span>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ministries-page">
+        <!-- Header Section -->
+        <header class="page-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1><i class="fas fa-hands-helping"></i> Ministries</h1>
+                    <p>Manage church ministries, volunteers, and outreach programs</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="addMinistryBtn">
+                        <i class="fas fa-plus"></i> Add Ministry
+                    </button>
+                    <button class="btn btn-secondary" id="manageVolunteersBtn">
+                        <i class="fas fa-users"></i> Volunteers
+                    </button>
+                    <button class="btn btn-info" id="ministryReportsBtn">
+                        <i class="fas fa-chart-bar"></i> Reports
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Ministry Overview Cards -->
+        <section class="ministry-overview">
+            <div class="overview-grid">
+                <div class="overview-card total">
+                    <div class="card-icon">
+                        <i class="fas fa-church"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="totalMinistriesCount">0</h3>
+                        <p>Total Ministries</p>
+                        <span class="period">Active Programs</span>
+                    </div>
+                </div>
+                
+                <div class="overview-card volunteers">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="totalVolunteersCount">0</h3>
+                        <p>Active Volunteers</p>
+                        <span class="period">Serving Members</span>
+                    </div>
+                </div>
+                
+                <div class="overview-card leaders">
+                    <div class="card-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="totalLeadersCount">0</h3>
+                        <p>Ministry Leaders</p>
+                        <span class="period">Leadership Team</span>
+                    </div>
+                </div>
+                
+                <div class="overview-card events">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 id="upcomingEventsCount">0</h3>
+                        <p>Upcoming Events</p>
+                        <span class="period">This Month</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ministry Categories -->
+        <section class="ministry-categories">
+            <div class="categories-header">
+                <h2>Ministry Categories</h2>
+                <div class="category-filters">
+                    <button class="filter-btn active" data-category="all">All Ministries</button>
+                    <button class="filter-btn" data-category="worship">Worship</button>
+                    <button class="filter-btn" data-category="education">Education</button>
+                    <button class="filter-btn" data-category="outreach">Outreach</button>
+                    <button class="filter-btn" data-category="fellowship">Fellowship</button>
+                    <button class="filter-btn" data-category="support">Support</button>
+                </div>
+            </div>
+            
+            <div class="ministries-grid" id="ministriesGrid">
+                <!-- Ministry cards will be populated here -->
+            </div>
+        </section>
+
+        <!-- Volunteer Opportunities -->
+        <section class="volunteer-opportunities">
+            <div class="section-header">
+                <h2><i class="fas fa-hand-paper"></i> Volunteer Opportunities</h2>
+                <button class="btn btn-sm btn-primary" id="addOpportunityBtn">
+                    <i class="fas fa-plus"></i> Add Opportunity
+                </button>
+            </div>
+            
+            <div class="opportunities-list" id="opportunitiesList">
+                <!-- Volunteer opportunities will be populated here -->
+            </div>
+        </section>
+
+        <!-- Ministry Calendar -->
+        <section class="ministry-calendar">
+            <div class="section-header">
+                <h2><i class="fas fa-calendar-alt"></i> Ministry Calendar</h2>
+                <div class="calendar-controls">
+                    <button class="btn btn-sm btn-secondary" id="prevMonth">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span class="current-month" id="currentMonth">January 2024</span>
+                    <button class="btn btn-sm btn-secondary" id="nextMonth">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="calendar-container">
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Calendar will be populated here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Ministry Details Modal -->
+    <div class="modal-overlay" id="ministryModal">
+        <div class="modal large">
+            <div class="modal-header">
+                <h3 id="ministryModalTitle">Ministry Details</h3>
+                <button class="modal-close" id="closeMinistryModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="ministryModalBody">
+                <!-- Ministry details content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Ministry Modal -->
+    <div class="modal-overlay" id="ministryFormModal">
+        <div class="modal large">
+            <div class="modal-header">
+                <h3 id="ministryFormTitle">Add New Ministry</h3>
+                <button class="modal-close" id="closeMinistryFormModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="ministryForm" class="ministry-form">
+                    <div class="form-section">
+                        <h4><i class="fas fa-info-circle"></i> Basic Information</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Ministry Name *</label>
+                                <input type="text" class="form-control" id="ministryName" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Category *</label>
+                                <select class="form-control" id="ministryCategory" required>
+                                    <option value="">Select Category</option>
+                                    <option value="worship">Worship</option>
+                                    <option value="education">Education</option>
+                                    <option value="outreach">Outreach</option>
+                                    <option value="fellowship">Fellowship</option>
+                                    <option value="support">Support</option>
+                                    <option value="youth">Youth</option>
+                                    <option value="children">Children</option>
+                                    <option value="seniors">Seniors</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" id="ministryDescription" rows="3" 
+                                      placeholder="Describe the ministry's purpose and activities..."></textarea>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Meeting Day</label>
+                                <select class="form-control" id="meetingDay">
+                                    <option value="">No Regular Meeting</option>
+                                    <option value="sunday">Sunday</option>
+                                    <option value="monday">Monday</option>
+                                    <option value="tuesday">Tuesday</option>
+                                    <option value="wednesday">Wednesday</option>
+                                    <option value="thursday">Thursday</option>
+                                    <option value="friday">Friday</option>
+                                    <option value="saturday">Saturday</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Meeting Time</label>
+                                <input type="time" class="form-control" id="meetingTime">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Location</label>
+                                <select class="form-control" id="meetingLocation">
+                                    <option value="">Select Location</option>
+                                    <option value="main-sanctuary">Main Sanctuary</option>
+                                    <option value="fellowship-hall">Fellowship Hall</option>
+                                    <option value="youth-room">Youth Room</option>
+                                    <option value="children-room">Children's Room</option>
+                                    <option value="conference-room">Conference Room</option>
+                                    <option value="off-site">Off-site Location</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4><i class="fas fa-user-tie"></i> Leadership</h4>
+                        <div class="form-group">
+                            <label class="form-label">Ministry Leader</label>
+                            <select class="form-control" id="ministryLeader">
+                                <option value="">Select Leader</option>
+                                <!-- Will be populated with members -->
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Assistant Leaders</label>
+                            <select class="form-control" id="assistantLeaders" multiple>
+                                <!-- Will be populated with members -->
+                            </select>
+                            <small class="form-text">Hold Ctrl/Cmd to select multiple leaders</small>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4><i class="fas fa-cog"></i> Settings</h4>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="isActive" checked>
+                                Ministry is currently active
+                            </label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="acceptsVolunteers">
+                                Accepting new volunteers
+                            </label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="requiresTraining">
+                                Requires volunteer training
+                            </label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Contact Email</label>
+                            <input type="email" class="form-control" id="contactEmail" 
+                                   placeholder="ministry@accordchurch.org">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Budget (Annual)</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="number" class="form-control" id="annualBudget" 
+                                       step="100" min="0" placeholder="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Ministry
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="cancelMinistryForm">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Volunteer Management Modal -->
+    <div class="modal-overlay" id="volunteerModal">
+        <div class="modal extra-large">
+            <div class="modal-header">
+                <h3 id="volunteerModalTitle">Volunteer Management</h3>
+                <button class="modal-close" id="closeVolunteerModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="volunteerModalBody">
+                <!-- Volunteer management content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Volunteer Opportunity Modal -->
+    <div class="modal-overlay" id="opportunityModal">
+        <div class="modal medium">
+            <div class="modal-header">
+                <h3 id="opportunityModalTitle">Add Volunteer Opportunity</h3>
+                <button class="modal-close" id="closeOpportunityModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="opportunityForm" class="opportunity-form">
+                    <div class="form-group">
+                        <label class="form-label">Opportunity Title *</label>
+                        <input type="text" class="form-control" id="opportunityTitle" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Ministry *</label>
+                        <select class="form-control" id="opportunityMinistry" required>
+                            <option value="">Select Ministry</option>
+                            <!-- Will be populated with ministries -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" id="opportunityDescription" rows="3" 
+                                  placeholder="Describe the volunteer opportunity..."></textarea>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Time Commitment</label>
+                            <select class="form-control" id="timeCommitment">
+                                <option value="one-time">One-time</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="seasonal">Seasonal</option>
+                                <option value="ongoing">Ongoing</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Volunteers Needed</label>
+                            <input type="number" class="form-control" id="volunteersNeeded" min="1" value="1">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Skills Required</label>
+                        <input type="text" class="form-control" id="skillsRequired" 
+                               placeholder="e.g., Musical ability, Teaching experience">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="backgroundCheckRequired">
+                            Background check required
+                        </label>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Opportunity
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="cancelOpportunityForm">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/ministries-enhanced.js"></script>
+</body>
+</html>
